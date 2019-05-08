@@ -1,6 +1,6 @@
 # MessagePass
 
-**TODO: Add description**
+You probably shouldn't use this
 
 ## Installation
 
