@@ -1,18 +1,7 @@
 defmodule MessagePass do
-  @moduledoc """
-  Documentation for MessagePass.
-  """
+  use Application
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> MessagePass.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    MP.Supervisor.start_link([])
   end
 end
