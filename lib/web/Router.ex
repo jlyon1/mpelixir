@@ -1,7 +1,9 @@
 defmodule MP.Router do
     use Plug.Router
 
-    plug Plug.Parsers, parsers: [:urlencoded, :multipart]
+    plug Plug.Parsers, parsers: [:urlencoded, :multipart, :json], 
+                       pass: ["application/json"], 
+                       json_decoder: Jason
     plug :match
     plug :dispatch
 
@@ -17,6 +19,16 @@ defmodule MP.Router do
         conn
         |> put_resp_content_type("application/json")
         |> send_resp(200, test)
+    end
+
+    post "/add" do
+        case conn.body_params do
+            %{"test" => z} -> 
+                send_resp(conn, 200, "test provided: " <> z)
+            _ ->
+                send_resp(conn, 400, "bad request or whatever")
+        end
+
     end
 
     match _ do
