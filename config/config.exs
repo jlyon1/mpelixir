@@ -2,7 +2,8 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :message_pass, cowboy_port: 8080
+config :message_pass, cowboy_port: 8081
+config :message_pass, routing_table: [{?a..?m, :"foo@127.0.0.1"}, {?n..?z, :"bar@127.0.0.1"}]
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
