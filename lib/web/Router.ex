@@ -51,6 +51,18 @@ defmodule MP.Router do
     end
   end
 
+  get "/pop" do
+    case MP.TaskRouter.find_and_pop do
+      {:empty, _} ->
+        conn
+        |> send_resp(200, "empty")
+      {:ok, val} -> 
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, val) 
+    end
+  end
+
   match _ do
     send_resp(conn, 404, "not found")
   end
