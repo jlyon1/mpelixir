@@ -37,7 +37,7 @@ defmodule MP.Router do
     case conn.body_params do
       %{"key" => _key, "value" => val} ->
         # Key is not used for now
-        jsv = Jason.encode!(val)
+        {:ok, jsv} = Jason.encode(val)
         case MP.TaskRouter.rand_push(jsv) do
           :ok -> 
             conn |> send_resp(200, "inserted")
