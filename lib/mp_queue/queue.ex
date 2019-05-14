@@ -18,7 +18,7 @@ defmodule MP.Queue do
   end
 
   def init(:ok) do
-    queue = [:a, :b]
+    queue = []
     {:ok, queue}
   end
 
