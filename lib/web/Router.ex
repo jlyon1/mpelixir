@@ -27,13 +27,27 @@ defmodule MP.Router do
     |> send_resp(200, test)
   end
 
-  post "/add" do
+  # {
+  #   "key": "keyName",
+  #   "value": {
+  #     "value": "val"
+  #   }
+  # }
+  post "/put" do
     case conn.body_params do
-      %{"test" => z} ->
-        send_resp(conn, 200, "test provided: " <> z)
-
+      %{"key" => _key, "value" => val} ->
+        # Key is not used for now
+        jsv = Jason.encode!(val)
+        case MP.TaskRouter.rand_push(jsv) do
+          :ok -> 
+            conn |> send_resp(200, "inserted")
+          _ -> 
+            conn |> send_resp(500, "internal server error")
+        end
       _ ->
-        send_resp(conn, 400, "bad request or whatever")
+        conn
+        |> send_resp(400, "bad request")
+        IO.puts "here"
     end
   end
 
