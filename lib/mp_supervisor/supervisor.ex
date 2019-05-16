@@ -9,7 +9,7 @@ defmodule MP.Supervisor do
   def init(:ok) do
     children = [
       {MP.Queue, name: MP.Queue},
-      {Plug.Cowboy, scheme: :http, plug: MP.Router, options: [port: cowboy_port()]},
+      # {Plug.Cowboy, scheme: :http, plug: MP.Router, options: [port: cowboy_port()]},
       {Task.Supervisor, name: MP.Tasks}
     ]
 

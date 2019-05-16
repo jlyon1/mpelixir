@@ -41,12 +41,17 @@ defmodule MP.TaskRouter do
     if length(table) == 0 do
         {:empty, :empty}        
     else
-        task = Task.Supervisor.async {MP.Tasks, hd table}, MP.Queue, :len, []
-        case Task.await(task) do
-            {:ok, 0} -> 
-                find_good_node(tl table)
-            _ -> 
-                {:ok, hd table}
+        case Node.ping(hd table) do
+          :pang ->
+            find_good_node(tl table)
+          _ ->
+            task = Task.Supervisor.async {MP.Tasks, hd table}, MP.Queue, :len, []
+            case Task.await(task) do
+                {:ok, 0} -> 
+                    find_good_node(tl table)
+                _ -> 
+                    {:ok, hd table}
+            end
         end
     end
   end
